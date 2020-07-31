@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>simpleQuery</title>
+    <link href="./css/wing.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/default.css" />
+    <style>
+      .block {
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 15px;
+      }
+      .red {
+        color: red;
+      }
+      .blue {
+        color: blue;
+      }
+      .box {
+        width: 100px;
+        height: 100px;
+        background: #ccc;
+      }
+      .simple-box {
+        width: 50px;
+        height: 50px;
+        background: #333;
+      }
+    </style>
+    <script src="./js/highlight.min.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <h3># 简易jquery工具库</h3>
+      <div class="block">
+        <div id="h1">设置单个样式</div>
+        <div id="title">设置多个样式</div>
+        <pre>
+          <code>
+          $('#h1').css('color', 'red');
+          $('#title').css(
+              {
+                fontSize: '32px',
+                fontWeight: 'bolder',
+                color:'#0072ff'
+              }
+          );
+          </code>
+        </pre>
+      </div>
+
+      <div class="block">
+        <b>选择器</b>
+        <ul style="background-color: #ccc;">
+          <li>siblings</li>
+          <li>siblings,prev</li>
+          <li id="siblings">siblings</li>
+          <li>siblings,next</li>
+        </ul>
+        <pre>
+            <code>
+              $('#siblings').prev().css('background', '#ffc107');
+              $('#siblings').next().css('background', '#dc3545');
+            </code>
+          </pre>
+      </div>
+
+      <div class="block">
+        <b>循环、事件绑定</b>
+        <ul id="list">
+          <li>1 row</li>
+          <li>2 row</li>
+          <li>3 row</li>
+        </ul>
+        <pre>
+          <code>
+            const $lis = $('#list > li');
+            $lis.each(function(index) {
+                if (index % 2) {
+                $(this).css('color', '#FFB716');
+                } else {
+                $(this).css('color', '#0072ff');
+                }
+            });
+            $lis.on('click', function (e) {
+              alert('点击li');
+            });
+          </code>
+        </pre>
+      </div>
+
+      <div class="block">
+        <b>获取dom值</b>
+        <div id="html"><small>获取html</small></div>
+        <div id="text">获取text</div>
+        <input id="input" type="text" value="input内容" />
+        获取结果：
+        <p id="result"></p>
+        <pre>
+          <code>
+            const res = $('#html').html()+','+$('#text').text()+','+$('#input').val();
+            $('#result').html(res);
+          </code>
+        </pre>
+      </div>
+
+      <div class="block">
+        <b>获取或设置属性</b>
+        <div id="attr">属性name:<span></span></div>
+        <pre>
+          <code>
+            $('#attr').attr('name','reborn')
+            $('#attr > span').text($('#attr').attr('name'))
+          </code>
+        </pre>
+      </div>
+
+      <div class="block">
+        <b>添加删除class</b>
+        <div id="red" style="cursor: pointer;">
+          添加addClass删除removeClass.red
+        </div>
+        <div id="blue" style="cursor: pointer;">添加删除toggleClass.blue</div>
+        <pre>
+          <code>
+            $('#red').on('click',function(e){
+              const $this = $(this);
+              if($this.hasClass('red')){
+                $this.removeClass('red');
+              }
+              else{
+                $this.addClass('red');
+              }
+            })
+            $('#blue').on('click',function(e){
+              $(this).toggleClass('blue');
+            })
+          </code>
+        </pre>
+      </div>
+
+      <div class="block">
+        <b>width()、height()position()、offset()</b>
+        <div id="box" class="box"></div>
+        <p></p>
+        <pre>
+            <code>
+              const res = $('#box').width()+','+$('#box').height()+','+JSON.stringify($('#box').position())+','+JSON.stringify($('#box').offset())
+              $('#box').next().text(res)
+            </code>
+          </pre>
+      </div>
+
+      <div class="block">
+        <b>clone</b>
+        <div id="simple-box" class="simple-box"></div>
+        <div id="clone" class="box">clone</div>
+        <pre>
+          <code>
+            $('#clone').append($('#simple-box').clone())
+          </code>
+        </pre>
+      </div>
+    </main>
+  </body>
+  <script src="./js/simpleQuery.js"></script>
+  <script>
+    /**
+     * #007bff
+     * #6c757d
+     * #28a745
+     * #dc3545
+     * #ffc107
+     * #17a2b8
+     */
+    $(() => {
+      console.log('running simpleQuery');
+      function htmlDecodeByRegExp(str) {
+        let temp = '';
+        if (str.length == 0) return '';
+        temp = str.replace(/&amp;/g, '&');
+        temp = temp.replace(/&lt;/g, '<');
+        temp = temp.replace(/&gt;/g, '>');
+        temp = temp.replace(/&nbsp;/g, ' ');
+        temp = temp.replace(/&#39;/g, "'");
+        temp = temp.replace(/&quot;/g, '"');
+        return temp;
+      }
+      $('pre > code').each(function (i) {
+        const code = htmlDecodeByRegExp($(this).html());
+        eval(code);
+        hljs.highlightBlock(this);
+      });
+    });
+  </script>
+</html>
