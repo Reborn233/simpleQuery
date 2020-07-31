@@ -26,6 +26,7 @@
         width: 50px;
         height: 50px;
         background: #333;
+        position: relative;
       }
     </style>
     <script src="./js/highlight.min.js"></script>
@@ -141,6 +142,86 @@
       </div>
 
       <div class="block">
+        <b>show,hide元素</b>
+        <div id="hide" style="cursor: pointer;">点击隐藏</div>
+        <div id="show" style="cursor: pointer;">点击显示</div>
+        <div id="toggle" style="cursor: pointer;">点击toggle</div>
+        <pre>
+            <code>
+              $('#hide').on('click',function(e){
+                $(this).hide()
+              })
+              $('#show').on('click',function(e){
+                $('#hide').show();
+              })
+              $('#toggle').on('click',function(e){
+                $('#hide').toggle();
+              })
+            </code>
+          </pre>
+      </div>
+
+      <div class="block">
+        <b>fadeIn,fadeOut,fadeToggle</b>
+        <div id="fade">fade</div>
+        <div id="fadeOut">fadeOut</div>
+        <div id="fadeIn">fadeIn</div>
+        <div id="fadeToggle">fadeToggle</div>
+        <pre>
+            <code>
+              $('#fadeOut').on('click',function(e){
+                $('#fade').fadeOut(1000)
+              })
+              $('#fadeIn').on('click',function(e){
+                $('#fade').fadeIn(1000);
+              })
+              $('#fadeToggle').on('click',function(e){
+                $('#fade').fadeToggle(1000);
+              })
+            </code>
+          </pre>
+      </div>
+
+      <div class="block">
+        <b>slideUp,slideDown,slideToggle</b>
+        <div id="slide">slide</div>
+        <div id="slideUp">slideUp</div>
+        <div id="slideDown">slideDown</div>
+        <div id="slideToggle">slideToggle</div>
+        <pre>
+            <code>
+              $('#slideUp').on('click',function(e){
+                $('#slide').slideUp(1000)
+              })
+              $('#slideDown').on('click',function(e){
+                $('#slide').slideDown(1000);
+              })
+              $('#slideToggle').on('click',function(e){
+                $('#slide').slideToggle(1000);
+              })
+            </code>
+          </pre>
+      </div>
+
+      <div class="block">
+        <b>Animate</b>
+        <p>执行一系列 CSS 属性动画</p>
+        <div id="simple-box" class="simple-box"></div>
+        <button id="Animate">Animate</button>
+        <pre>
+          <code>
+              $('#Animate').on('click',function(){
+                $('#simple-box').animate({
+                    width:'100px',
+                    left:'50px',
+                    background:'red'
+                },3000)
+              })
+          </code>
+        </pre>
+      </div>
+
+      <div class="block">
         <b>width()、height()position()、offset()</b>
         <div id="box" class="box"></div>
         <p></p>
@@ -159,6 +240,166 @@
         <pre>
           <code>
             $('#clone').append($('#simple-box').clone())
+          </code>
+        </pre>
+      </div>
+
+      <div class="block">
+        <b>empty</b>
+        <div id="empty" class="box">
+          <div class="simple-box"></div>
+        </div>
+        <pre>
+            <code>
+              $('#empty').on('click',function(){
+                $(this).empty();
+              })
+            </code>
+          </pre>
+      </div>
+
+      <div class="block">
+        <b>Ajax load()</b>
+        <div id="load"></div>
+        <button id="loadBtn">load text</button>
+        <div id="getJson"></div>
+        <button id="getJsonBtn">getJson</button>
+        <button id="postBtn">postBtn</button>
+        <pre>
+          <code>
+            $('#loadBtn').on('click',function(){
+              $('#load').load('./text.txt',function(data){
+                console.log(data)
+              })
+            })
+            const rank = 'https://api.apiopen.top/musicRankings'
+            $('#getJsonBtn').on('click',function(){
+              $.getJson(rank,function(data){
+                $('#getJson').text(data.result.map(d=>d.color))
+              })
+            })
+            $('#postBtn').on('click',function(){
+              $.post(rank,null,function(data){
+                $('#getJson').text(data.result.map(d=>d.name))
+              })
+            })
+          </code>
+        </pre>
+      </div>
+
+      <div class="block">
+        <b>isArray</b>
+        <p>检测参数是不是数组。</p>
+        <p id="isArray"></p>
+        <pre>
+          <code>
+            $('#isArray').text($.isArray([]));
+          </code>
+        </pre>
+      </div>
+      <div class="block">
+        <b>isWindow</b>
+        <p>检测参数是不是 window。</p>
+        <p id="isWindow"></p>
+        <pre>
+                <code>
+                  $('#isWindow').text($.isWindow(window));
+                </code>
+              </pre>
+      </div>
+      <div class="block">
+        <b>inArray</b>
+        <p>在数组中搜索指定值并返回索引</p>
+        <p id="inArray"></p>
+        <pre>
+                      <code>
+                        $('#inArray').text($.inArray(2,[1,2,3]));
+                      </code>
+                    </pre>
+      </div>
+      <div class="block">
+        <b>isNumeric</b>
+        <p>检测传入的参数是不是数字</p>
+        <p id="isNumeric"></p>
+        <pre>
+            <code>
+              $('#isNumeric').text($.isNumeric(2));
+            </code>
+          </pre>
+      </div>
+      <div class="block">
+        <b>isFunction</b>
+        <p>检测传入的参数是不是 JavaScript 函数对象</p>
+        <p id="isFunction"></p>
+        <pre>
+          <code>
+            $('#isFunction').text($.isFunction(function(){}));
+          </code>
+        </pre>
+      </div>
+      <div class="block">
+        <b>isEmptyObject</b>
+        <p>检测对象是否为空</p>
+        <p id="isEmptyObject"></p>
+        <pre>
+                <code>
+                  $('#isEmptyObject').text($.isEmptyObject({}));
+                </code>
+              </pre>
+      </div>
+      <div class="block">
+        <b>isPlainObject</b>
+        <p>检测是不是扁平对象 (使用 “{}” 或 “new Object” 创建)</p>
+        <p id="isPlainObject"></p>
+        <pre>
+                      <code>
+                        $('#isPlainObject').text($.isPlainObject($('#isPlainObject')));
+                      </code>
+                    </pre>
+      </div>
+      <div class="block">
+        <b>extend</b>
+        <p>合并多个对象的内容到第一个对象</p>
+        <p id="extend"></p>
+        <pre>
+          <code>
+            $('#extend').text(JSON.stringify($.extend({},{a:1},{a:2,b:3})));
+          </code>
+        </pre>
+      </div>
+      <div class="block">
+        <b>type</b>
+        <p>检测对象的 JavaScript [Class] 内部类型</p>
+        <p id="type"></p>
+        <pre>
+          <code>
+            $('#type').text(
+              $.type(1)+','+
+              $.type('1')+','+
+              $.type(null)+','+
+              $.type(undefined)+','+
+              $.type({})+','+
+              $.type([])+','+
+              $.type(/(?:^\[object\s(.*?)\]$)/)+','+
+              $.type(function(){})
+            );
+          </code>
+        </pre>
+      </div>
+      <div class="block">
+        <b>merge</b>
+        <p>合并数组(去重)</p>
+        <p id="merge"></p>
+        <pre>
+            <code>
+              $('#merge').text($.merge([1],[2,3],[1,2,3,4]));
+            </code>
+          </pre>
+      </div>
+      <div class="block">
+        <pre>
+          <code>
+            
           </code>
         </pre>
       </div>
@@ -193,5 +434,14 @@
         hljs.highlightBlock(this);
       });
     });
+
+    const htmlString = `
+      <ul id="list">
+          <li>1 row</li>
+          <li>2 row</li>
+          <li>3 row</li>
+        </ul>
+    `;
+    console.log($.parseHTML(htmlString)[0]);
   </script>
 </html>
